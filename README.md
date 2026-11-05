@@ -1,3 +1,20 @@
+Bun works for this. Use bunx instead of npx:
+#command
+bunx @vscode/vsce package --allow-missing-repository --skip-license
+
+Run it inside the kore-highlight folder (the one with package.json). It creates kore-highlight-2.0.0.vsix there.
+
+If bunx fails with an error (some vsce versions rely on Node-specific behavior), install Node.js from https://nodejs.org and use npx instead. Bun can’t fully replace Node for every package.
+
+To install the file:
+#command 
+code --install-extension kore-highlight-2.0.0.vsix
+
+Or in VS Code, open Extensions, click the … menu, choose “Install from VSIX…”, and pick the file.
+
+The smoke test also runs on Bun: bun test/smoke.js.
+
+
 # kore-highlight
 The VsCode Highlighter
 
