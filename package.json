@@ -1,0 +1,241 @@
+{
+  "name": "kore-highlight",
+  "displayName": "KoRe-HighLight",
+  "description": "Colorful background highlights behind every token and word. Many palettes, presets and sizing options, plus optional text color, font emphasis and font family.",
+  "version": "2.0.0",
+  "publisher": "kore",
+  "license": "MIT",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Visualization",
+    "Themes",
+    "Other"
+  ],
+  "keywords": [
+    "highlight",
+    "background",
+    "color",
+    "tokens",
+    "pills",
+    "kore"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "koreHighlight.toggle",
+        "title": "KoRe-HighLight: Toggle On/Off"
+      },
+      {
+        "command": "koreHighlight.choosePreset",
+        "title": "KoRe-HighLight: Choose Preset"
+      },
+      {
+        "command": "koreHighlight.choosePalette",
+        "title": "KoRe-HighLight: Choose Color Palette"
+      },
+      {
+        "command": "koreHighlight.chooseMapping",
+        "title": "KoRe-HighLight: Change Color Mapping"
+      },
+      {
+        "command": "koreHighlight.chooseTextColor",
+        "title": "KoRe-HighLight: Text Color (optional)"
+      },
+      {
+        "command": "koreHighlight.chooseFont",
+        "title": "KoRe-HighLight: Font (optional)"
+      },
+      {
+        "command": "koreHighlight.reset",
+        "title": "KoRe-HighLight: Reset to Defaults"
+      }
+    ],
+    "configuration": {
+      "title": "KoRe-HighLight",
+      "properties": {
+        "koreHighlight.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Highlight every token with a colored background."
+        },
+        "koreHighlight.mapping": {
+          "type": "string",
+          "default": "category",
+          "enum": [
+            "category",
+            "word",
+            "rainbow",
+            "single"
+          ],
+          "enumDescriptions": [
+            "Color by token type: keywords, strings, numbers, functions, types, variables, comments.",
+            "Same word, same color everywhere.",
+            "Colors cycle through the palette across each line.",
+            "One color for every token."
+          ],
+          "description": "How colors are assigned to tokens."
+        },
+        "koreHighlight.palette": {
+          "type": "string",
+          "default": "pastel",
+          "enum": [
+            "pastel",
+            "neon",
+            "ocean",
+            "sunset",
+            "forest",
+            "candy",
+            "earth",
+            "mono",
+            "highContrast",
+            "custom"
+          ],
+          "description": "Color palette used for the highlights. 'custom' uses koreHighlight.customPalette."
+        },
+        "koreHighlight.customPalette": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Your own palette as hex colors, e.g. [\"#ff6b6b\", \"#feca57\", \"#48dbfb\"]. Used when palette is 'custom'."
+        },
+        "koreHighlight.categoryColors": {
+          "type": "object",
+          "default": {},
+          "description": "Override single categories (mapping 'category'). Keys: keyword, string, number, function, type, variable, comment. Example: {\"keyword\": \"#ff0066\"}."
+        },
+        "koreHighlight.singleColor": {
+          "type": "string",
+          "default": "#ffe08a",
+          "description": "Hex color (#rrggbb) used when mapping is 'single'."
+        },
+        "koreHighlight.opacity": {
+          "type": "number",
+          "default": 0.45,
+          "minimum": 0.1,
+          "maximum": 1,
+          "description": "Opacity of the background highlight. Lower keeps your theme text colors easy to read."
+        },
+        "koreHighlight.borderRadius": {
+          "type": "number",
+          "default": 3,
+          "minimum": 0,
+          "maximum": 12,
+          "description": "Corner roundness of the highlight in pixels. Does not move text."
+        },
+        "koreHighlight.highlightSize": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0,
+          "maximum": 3,
+          "description": "Grow the highlight outward by this many pixels (bigger pill). Does not move or resize text."
+        },
+        "koreHighlight.textColorMode": {
+          "type": "string",
+          "default": "off",
+          "enum": [
+            "off",
+            "auto",
+            "dark",
+            "light",
+            "custom"
+          ],
+          "enumDescriptions": [
+            "Keep your theme text colors.",
+            "Dark or light text depending on the highlight (needs opacity 0.55 or more).",
+            "Always dark text.",
+            "Always light text.",
+            "Use koreHighlight.textColor."
+          ],
+          "description": "OPTIONAL: change the text color on highlighted tokens."
+        },
+        "koreHighlight.textColor": {
+          "type": "string",
+          "default": "#1b1b1f",
+          "description": "Hex text color used when textColorMode is 'custom'."
+        },
+        "koreHighlight.keywordStyle": {
+          "type": "string",
+          "default": "normal",
+          "enum": [
+            "normal",
+            "bold",
+            "italic",
+            "bold-italic"
+          ],
+          "description": "OPTIONAL: font emphasis for keywords."
+        },
+        "koreHighlight.commentStyle": {
+          "type": "string",
+          "default": "normal",
+          "enum": [
+            "normal",
+            "bold",
+            "italic",
+            "bold-italic"
+          ],
+          "description": "OPTIONAL: font emphasis for comments."
+        },
+        "koreHighlight.functionStyle": {
+          "type": "string",
+          "default": "normal",
+          "enum": [
+            "normal",
+            "bold",
+            "italic",
+            "bold-italic"
+          ],
+          "description": "OPTIONAL: font emphasis for function names."
+        },
+        "koreHighlight.typeStyle": {
+          "type": "string",
+          "default": "normal",
+          "enum": [
+            "normal",
+            "bold",
+            "italic",
+            "bold-italic"
+          ],
+          "description": "OPTIONAL: font emphasis for Types and Classes."
+        },
+        "koreHighlight.stringStyle": {
+          "type": "string",
+          "default": "normal",
+          "enum": [
+            "normal",
+            "bold",
+            "italic",
+            "bold-italic"
+          ],
+          "description": "OPTIONAL: font emphasis for strings."
+        },
+        "koreHighlight.fontFamily": {
+          "type": "string",
+          "default": "",
+          "description": "OPTIONAL: font family for highlighted text, e.g. \"Fira Code\". Empty keeps your editor font. The font must be installed; non-monospace fonts can make the cursor drift slightly."
+        },
+        "koreHighlight.excludedLanguages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Language IDs that should not be highlighted, e.g. [\"markdown\"]."
+        },
+        "koreHighlight.statusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the KoRe-HighLight item in the status bar."
+        }
+      }
+    }
+  }
+}
